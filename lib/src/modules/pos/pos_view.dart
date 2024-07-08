@@ -147,12 +147,24 @@ class PosView extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            buildBottomButton(
-                                'กลับ', Colors.blue, Colors.white),
-                            buildBottomButtonWithIcon('จบการขายรับใบเสร็จ',
-                                Icons.receipt, Colors.green, Colors.white),
-                            buildBottomButtonWithIcon('จบการขายไม่รับใบเสร็จ',
-                                Icons.receipt_long, Colors.green, Colors.white),
+                            Expanded(
+                              child: buildBottomButton(
+                                  'กลับ', Colors.blue, Colors.white),
+                            ),
+                            Expanded(
+                              child: buildBottomButtonWithIcon(
+                                  'จบการขายรับใบเสร็จ',
+                                  Icons.receipt,
+                                  Colors.green,
+                                  Colors.white),
+                            ),
+                            Expanded(
+                              child: buildBottomButtonWithIcon(
+                                  'จบการขายไม่รับใบเสร็จ',
+                                  Icons.receipt_long,
+                                  Colors.green,
+                                  Colors.white),
+                            ),
                           ],
                         ),
                       ],
@@ -194,52 +206,84 @@ class PosView extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: [
-                              Flexible(
-                                child: GridView.count(
-                                  crossAxisCount: 3,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5,
-                                  childAspectRatio: 2.5,
-                                  children: [
-                                    buildNumberButton('20', model, Colors.green,
-                                        Colors.white),
-                                    buildNumberButton(
-                                        '50', model, Colors.blue, Colors.white),
-                                    buildNumberButton(
-                                        '100', model, Colors.red, Colors.white),
-                                    buildNumberButton('500', model,
-                                        Colors.purple, Colors.white),
-                                    buildNumberButton('1000', model,
-                                        Colors.grey, Colors.white),
-                                    buildFixedButton('รับเงินพอดี', Colors.cyan,
-                                        Colors.white),
-                                  ],
-                                ),
+                              Table(
+                                defaultVerticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                columnWidths: const {
+                                  0: FlexColumnWidth(1),
+                                  1: FlexColumnWidth(1),
+                                  2: FlexColumnWidth(1),
+                                },
+                                children: [
+                                  TableRow(
+                                    children: [
+                                      buildNumberButton('20', model,
+                                          Colors.green, Colors.white),
+                                      buildNumberButton('50', model,
+                                          Colors.blue, Colors.white),
+                                      buildNumberButton('100', model,
+                                          Colors.red, Colors.white),
+                                    ],
+                                  ),
+                                  TableRow(
+                                    children: [
+                                      buildNumberButton('500', model,
+                                          Colors.purple, Colors.white),
+                                      buildNumberButton('1000', model,
+                                          Colors.grey, Colors.white),
+                                      buildFixedButton('รับเงินพอดี',
+                                          Colors.cyan, Colors.white),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              Flexible(
-                                child: GridView.count(
-                                  crossAxisCount: 4,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5,
-                                  childAspectRatio: 1.5,
+                              const SizedBox(height: 10),
+                              Expanded(
+                                child: Table(
+                                  defaultVerticalAlignment:
+                                      TableCellVerticalAlignment.middle,
+                                  columnWidths: const {
+                                    0: FlexColumnWidth(1),
+                                    1: FlexColumnWidth(1),
+                                    2: FlexColumnWidth(1),
+                                    3: FlexColumnWidth(1),
+                                  },
                                   children: [
-                                    buildNumberButton('7', model),
-                                    buildNumberButton('8', model),
-                                    buildNumberButton('9', model),
-                                    buildSpecialButton(
-                                        Icons.backspace, model.onDeletePress,
-                                        flex: 2),
-                                    buildNumberButton('4', model),
-                                    buildNumberButton('5', model),
-                                    buildNumberButton('6', model),
-                                    buildSpecialButtonText(
-                                        'ตกลง', model.submitInput),
-                                    buildNumberButton('1', model),
-                                    buildNumberButton('2', model),
-                                    buildNumberButton('3', model),
-                                    buildNumberButton('0', model),
-                                    buildNumberButton('00', model),
-                                    buildNumberButton('.', model),
+                                    TableRow(
+                                      children: [
+                                        buildNumberButton('7', model),
+                                        buildNumberButton('8', model),
+                                        buildNumberButton('9', model),
+                                        buildSpecialButton(Icons.backspace,
+                                            model.onDeletePress,
+                                            flex: 2),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        buildNumberButton('4', model),
+                                        buildNumberButton('5', model),
+                                        buildNumberButton('6', model),
+                                        buildSpecialButtonText(
+                                            'ตกลง', model.submitInput),
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        buildNumberButton('1', model),
+                                        buildNumberButton('2', model),
+                                        buildNumberButton('3', model),
+                                        Container(), // Empty cell for layout purposes
+                                      ],
+                                    ),
+                                    TableRow(
+                                      children: [
+                                        buildNumberButton('0', model),
+                                        buildNumberButton('00', model),
+                                        buildNumberButton('.', model),
+                                        Container(), // Empty cell for layout purposes
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -284,8 +328,10 @@ class PosView extends StatelessWidget {
         model.onNumberPress(number);
       },
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(8.0),
-        textStyle: const TextStyle(fontSize: 18),
+        padding:
+            const EdgeInsets.all(16.0), // Adjust padding to make buttons bigger
+        textStyle: const TextStyle(
+            fontSize: 24), // Increase font size for better readability
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -299,8 +345,10 @@ class PosView extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(8.0),
-        textStyle: const TextStyle(fontSize: 18),
+        padding:
+            const EdgeInsets.all(16.0), // Adjust padding to make buttons bigger
+        textStyle: const TextStyle(
+            fontSize: 24), // Increase font size for better readability
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -344,20 +392,19 @@ class PosView extends StatelessWidget {
 
   Widget buildSpecialButton(IconData icon, VoidCallback onPressed,
       {int flex = 1}) {
-    return Expanded(
-      flex: flex,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(8.0),
-          textStyle: const TextStyle(fontSize: 18),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          backgroundColor: Colors.grey[200],
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding:
+            const EdgeInsets.all(16.0), // Adjust padding to make buttons bigger
+        textStyle: const TextStyle(
+            fontSize: 24), // Increase font size for better readability
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
-        child: Icon(icon),
+        backgroundColor: Colors.grey[200],
       ),
+      child: Icon(icon),
     );
   }
 
@@ -365,8 +412,10 @@ class PosView extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(8.0),
-        textStyle: const TextStyle(fontSize: 18),
+        padding:
+            const EdgeInsets.all(16.0), // Adjust padding to make buttons bigger
+        textStyle: const TextStyle(
+            fontSize: 24), // Increase font size for better readability
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
