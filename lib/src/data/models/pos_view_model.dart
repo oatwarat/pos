@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class PosViewModel extends ChangeNotifier {
   String selectedMethod = '';
-  String inputValue = '0';
+  String inputValue = '0.00';
 
-  String totalAmount = '0';
-  String discount = '0';
-  String paymentAmount = '0';
-  String cash = '0';
-  String outstandingAmount = '0';
-  String change = '0';
+  String totalAmount = '0.00';
+  String discount = '0.00';
+  String paymentAmount = '0.00';
+  String cash = '0.00';
+  String outstandingAmount = '0.00';
+  String change = '0.00';
 
   void setSelectedMethod(String method) {
     selectedMethod = method;
@@ -17,12 +17,17 @@ class PosViewModel extends ChangeNotifier {
   }
 
   void addToInput(String value) {
-    inputValue = inputValue == '0' ? value : inputValue + value;
+    if (inputValue == '0.00') {
+      inputValue = value + '.00';
+    } else {
+      inputValue =
+          inputValue.substring(0, inputValue.length - 3) + value + '.00';
+    }
     notifyListeners();
   }
 
   void clearInput() {
-    inputValue = '0';
+    inputValue = '0.00';
     notifyListeners();
   }
 
@@ -36,10 +41,15 @@ class PosViewModel extends ChangeNotifier {
   }
 
   void onDeletePress() {
-    if (inputValue.isNotEmpty) {
-      inputValue = inputValue.substring(0, inputValue.length - 1);
-      notifyListeners();
+    if (inputValue.length > 3) {
+      inputValue = inputValue.substring(0, inputValue.length - 4) + '.00';
+      if (inputValue == '.00') {
+        inputValue = '0.00';
+      }
+    } else {
+      inputValue = '0.00';
     }
+    notifyListeners();
   }
 
   void onClearPress() {
